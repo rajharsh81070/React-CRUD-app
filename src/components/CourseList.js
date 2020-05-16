@@ -9,11 +9,12 @@ function CourseList(props) {
           <th>Title</th>
           <th>Author ID</th>
           <th>Category</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
         {props.courses.map(course => {
-          console.log(course);
+          // console.log(course);
           return (
             <tr key={course.id}>
               <td>
@@ -21,6 +22,14 @@ function CourseList(props) {
               </td>
               <td>{course.authorId}</td>
               <td>{course.category}</td>
+              <td>
+                <button className="btn btn-outline-danger" onClick={() => {
+                  debugger;
+                  props.deleteCourse(course.id)
+                }}
+                >
+                  Delete</button>
+              </td>
             </tr>
           );
         })}
