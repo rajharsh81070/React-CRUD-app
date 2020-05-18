@@ -3,6 +3,7 @@ import courseStore from '../stores/courseStore';
 import CourseList from './CourseList';
 import { loadCourses, deleteCourse } from "../actions/courseActions";
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function CoursesPage() {
   const [courses, setCourses] = useState(courseStore.getCourses());
@@ -15,8 +16,13 @@ function CoursesPage() {
   }, []);
 
   function onChange() {
-    debugger;
+    // debugger;
     setCourses(courseStore.getCourses());
+  }
+
+  function onDelete(id) {
+    deleteCourse(id);
+    toast.success("Course Deleted!");
   }
 
   return (
@@ -25,7 +31,7 @@ function CoursesPage() {
       <Link to="/course" className="btn btn-primary">
         Add Course
       </Link>
-      <CourseList courses={courses} deleteCourse={deleteCourse} />
+      <CourseList courses={courses} deleteCourse={onDelete} />
     </>
   );
 }

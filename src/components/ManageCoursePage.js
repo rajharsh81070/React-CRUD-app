@@ -3,8 +3,10 @@ import CourseForm from './CourseForm';
 import courseStore from '../stores/courseStore';
 import { toast } from 'react-toastify';
 import * as courseActions from '../actions/courseActions';
+import InvalidSlug from './InvalidSlug';
 
 const ManageCoursePage = props => {
+  const [checkValidSlug, setValidSlug] = useState();
   const [errors, setErrors] = useState({});
   const [courses, setCourses] = useState(courseStore.getCourses());
   const [course, setCourse] = useState({
@@ -17,16 +19,24 @@ const ManageCoursePage = props => {
 
   useEffect(() => {
     courseStore.addChangeListener(onChange);
-    const slug = props.match.params.slug; // from the path /courses/:slug
+    const slug = props.match.params.slug; // from the path /course/:slug
     if (courses.length === 0) {
       courseActions.loadCourses();
     } else if (slug) {
-      setCourse(courseStore.getCourseBySlug(slug));
+      // debugger;
+      const courseContent = courseStore.getCourseBySlug(slug);
+      if (courseContent === undefined)
+        setValidSlug(false)
+      else {
+        setCourse(courseContent);
+        setValidSlug(true)
+      }
     }
     return () => courseStore.removeChangeListener(onChange);
-  }, [courses.length, props.match.params.slug]);
+  }, [courses.length, props.history, props.match.params.slug]);
 
   function onChange() {
+    // console.log(props.match.params.slug);
     setCourses(courseStore.getCourses());
   }
 
@@ -60,14 +70,20 @@ const ManageCoursePage = props => {
 
   return (
     <>
-      <h2>Manage Course</h2>
-      {/* {props.match.params.slug} */}
-      <CourseForm
-        errors={errors}
-        course={course}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
+      {checkValidSlug === true ?
+        <>
+          <h2>Manage Course</h2>
+          <CourseForm
+            errors={errors}
+            course={course}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+          />
+        </>
+        :
+        <InvalidSlug />
+      }
+
     </>
   )
 }
