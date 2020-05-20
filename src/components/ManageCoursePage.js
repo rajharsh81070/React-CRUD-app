@@ -6,7 +6,7 @@ import * as courseActions from '../actions/courseActions';
 import InvalidSlug from './InvalidSlug';
 
 const ManageCoursePage = props => {
-  const [checkValidSlug, setValidSlug] = useState();
+  const [checkValidSlug, setValidSlug] = useState(true);
   const [errors, setErrors] = useState({});
   const [courses, setCourses] = useState(courseStore.getCourses());
   const [course, setCourse] = useState({
@@ -29,7 +29,6 @@ const ManageCoursePage = props => {
         setValidSlug(false)
       else {
         setCourse(courseContent);
-        setValidSlug(true)
       }
     }
     return () => courseStore.removeChangeListener(onChange);

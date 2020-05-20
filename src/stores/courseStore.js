@@ -42,7 +42,7 @@ Dispatcher.register(action => {
       );
       break;
     case actionTypes.DELETE_COURSE:
-      debugger;
+      // debugger;
       _courses = _courses.filter(course => course.id !== action.id);
       store.emitChange();
       break;

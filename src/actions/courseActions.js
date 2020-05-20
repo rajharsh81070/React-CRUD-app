@@ -13,7 +13,7 @@ export function saveCourse(course) {
 }
 
 export function deleteCourse(id) {
-  debugger;
+  // debugger;
   return courseApi.deleteCourse(id).then(() => {
     dispatcher.dispatch({
       actionType: actionTypes.DELETE_COURSE,
