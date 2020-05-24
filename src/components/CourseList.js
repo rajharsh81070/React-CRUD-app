@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function CourseList(props) {
-  const authorName = { ...props.courses };
-  console.log(authorName);
+  // console.log(props.courses);
+  // console.log(props.authors);
+  // console.log(authorNames);
+  // const [courses] = [...props.courses];
+  console.log(props.courses);
   return (
     <table className="table">
       <thead>
@@ -21,8 +24,13 @@ function CourseList(props) {
               <td>
                 <Link to={"/course/" + course.slug}>{course.title}</Link>
               </td>
-              {/* {console.log(authorName)} */}
-              <td>{}</td>
+              <td>{props.authors.map((author) => {
+                let result;
+                if (author.id === course.authorId)
+                  result = author.name;
+                return result;
+              })}
+              </td>
               <td>{course.category}</td>
               <td>
                 <button className="btn btn-outline-danger" onClick={() => {

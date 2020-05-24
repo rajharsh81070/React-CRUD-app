@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CourseForm from './CourseForm';
 import courseStore from '../stores/courseStore';
+import authorStore from '../stores/authorStore';
 import { toast } from 'react-toastify';
 import * as courseActions from '../actions/courseActions';
+import { loadAuthors } from '../actions/authorActions';
 import InvalidSlug from './InvalidSlug';
 
 const ManageCoursePage = props => {
@@ -16,6 +18,14 @@ const ManageCoursePage = props => {
     authorId: null,
     category: ""
   });
+  const [authors, setAuthors] = useState(authorStore.getAuthors());
+
+  useEffect(() => {
+    authorStore.addChangeListener(onAuthorChange);
+    if (authorStore.getAuthors().length === 0)
+      loadAuthors();
+    return () => authorStore.removeChangeListener(onAuthorChange);
+  }, []);
 
   useEffect(() => {
     courseStore.addChangeListener(onChange);
@@ -33,6 +43,11 @@ const ManageCoursePage = props => {
     }
     return () => courseStore.removeChangeListener(onChange);
   }, [courses.length, props.history, props.match.params.slug]);
+
+  function onAuthorChange() {
+    // debugger;
+    setAuthors(authorStore.getAuthors());
+  }
 
   function onChange() {
     // console.log(props.match.params.slug);
@@ -75,6 +90,7 @@ const ManageCoursePage = props => {
           <CourseForm
             errors={errors}
             course={course}
+            authors={authors}
             onChange={handleChange}
             onSubmit={handleSubmit}
           />
