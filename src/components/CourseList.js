@@ -6,7 +6,7 @@ function CourseList(props) {
   // console.log(props.authors);
   // console.log(authorNames);
   // const [courses] = [...props.courses];
-  console.log(props.courses);
+  // console.log(props.courses);
   return (
     <table className="table">
       <thead>

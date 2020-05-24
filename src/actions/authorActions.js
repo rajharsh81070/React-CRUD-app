@@ -12,3 +12,20 @@ export function loadAuthors() {
     });
   });
 }
+export function deleteAuthor(id) {
+  return authorApi.deleteAuthor(id).then(() => {
+    dispatcher.dispatch({
+      actionType: actionTypes.DELETE_AUTHORS,
+      id: id
+    });
+  });
+}
+
+export function saveAuthor(author) {
+  return authorApi.saveAuthor(author).then(savedAuthor => {
+    dispatcher.dispatch({
+      actionType: author.id ? actionTypes.UPDATE_AUTHOR : actionTypes.CREATE_AUTHOR,
+      author: savedAuthor
+    });
+  });
+}

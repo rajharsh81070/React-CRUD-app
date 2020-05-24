@@ -42,7 +42,7 @@ const ManageCoursePage = props => {
       }
     }
     return () => courseStore.removeChangeListener(onChange);
-  }, [courses.length, props.history, props.match.params.slug]);
+  }, [courses.length, props.match.params.slug]);
 
   function onAuthorChange() {
     // debugger;
@@ -96,7 +96,7 @@ const ManageCoursePage = props => {
           />
         </>
         :
-        <InvalidSlug />
+        <InvalidSlug name="slug" />
       }
 
     </>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-function NotFoundPage() {
+function NotFoundPage(props) {
   return (
     <div>
       <h2>
-        Invalid Slug
+        Invalid {props.name}
       </h2>
       <p>
         <Link to="/">Back To Home</Link>
